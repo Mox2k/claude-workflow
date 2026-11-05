@@ -15,7 +15,7 @@ Dort sieht ihn jeder Worktree, er wird nie committet und gerät in keinen Merge.
 spec: user-auth
 branch: implement/user-auth
 worktree: ../projekt-wt/user-auth
-status: claimed | running | waiting-for-merge | offen
+status: claimed | running | waiting-for-merge | offen | pausiert
 schritt: 5 von 9 — Umsetzung
 aktualisiert: 2026-08-25T14:32:07+0200
 epoch: 1787660327
@@ -50,11 +50,13 @@ Je Eintrag eine Zeile: Spec, Branch, Schritt, Alter. Alter immer aus `epoch:` re
 
 `merge.lock/` älter als 30 Minuten: Freigeben oder Liegen lassen.
 
+Steht im Eintrag `status: pausiert` oder ein Hinweis auf eine Pause des Users, oder sind viele Einträge gleichzeitig alt (typisch nach einer Pause): nur gesammelt in einer Zeile nennen und nichts entscheiden lassen – das betrifft diesen Lauf nicht. Eine Session, die der User bewusst anhält, setzt `status: pausiert`.
+
 ## Aufräumen (Schritt 0)
 
 Kandidat ist ein Branch `implement/*`, der **keinen Bus-Eintrag** hat und **vollständig in `main`** ist (`git branch --merged main`). Beides zählt: bei einem Feature-Ordner ist der Branch nach der ersten Sub-Spec schon in `main`, die Session arbeitet aber weiter – nur der fehlende Eintrag beweist, dass sie fertig ist. Ein verwaister Eintrag zählt als vorhanden.
 
-Entfernen mit `git worktree remove <pfad>` und `git branch -d <branch>` (nie `-D`: das kleine `-d` verweigert, falls doch etwas nicht gemergt ist). Uncommittete Änderungen im Worktree → stehen lassen und nennen. Ob vorher gefragt wird, sagt das Profil (`Aufräumen`). Liegen im Worktree Clips oder Abnahme-Videos, sie vorher nennen.
+Entfernen mit `git worktree remove <pfad>` (entfällt, wenn es keinen Worktree mehr gibt) und `git branch -d <branch>` (nie `-D`: das kleine `-d` verweigert, falls doch etwas nicht gemergt ist). Uncommittete Änderungen im Worktree → stehen lassen und nennen. Ob vorher gefragt wird, sagt das Profil (`Aufräumen`). Liegen im Worktree Clips oder Abnahme-Videos, sie vorher nennen.
 
 Eine Session entfernt nie ihren eigenen Worktree – sie arbeitet darin.
 
