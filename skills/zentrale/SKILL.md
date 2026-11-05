@@ -13,7 +13,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 
 | Datei | Wer schreibt | Inhalt |
 |---|---|---|
-| `index.html`, `app.js`, `app.css` | nur bei Änderungen an der Seite selbst (Quelle: dieser Skill, `seite/`) | Hülle, Ablauf, Aussehen |
+| `index.html` | nur bei Änderungen an der Seite selbst (Quelle: `seite/index.html` dieses Skills) | die ganze Seite in einer Datei – nachgeladene oder fremde Skripte lässt das Artifact nicht zu |
 | `daten/projekte.json` | `/projekt-setup` | Liste `[{id, name, farbe}]` |
 | `daten/<id>.json` | Claude (die Skills unten) | alles Geplante eines Projekts |
 | `eingaben/<id>.json` | nur die Seite (der User) | Urteile, Reihenfolge, Ideen, Zurückgeholtes |
@@ -70,7 +70,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 
 1. `read` mit `paths: ["index.html", "daten/<id>.json"]` – legt lokale Kopien an (Pfad steht im Ergebnis).
 2. Die lokale `daten/<id>.json` ändern (Datei bearbeiten, gültiges JSON, `stand` = jetzt).
-3. `read` mit nur der `url` (zählt als gesehen; die Hülle ist klein).
+3. `read` mit nur der `url` (zählt als gesehen; nötig, sonst wird der Publish abgelehnt).
 4. `publish` mit `url`, `file_path` = lokale `index.html`, `files: {"daten/<id>.json": "<lokaler Pfad>"}`.
 5. Abgelehnt, weil inzwischen jemand gespeichert hat: ab Schritt 1 wiederholen und die eigene Änderung auf den neuen Stand setzen. Nie den alten Stand erneut senden.
 
@@ -102,4 +102,4 @@ Nach grünem `/implement`: für alles, was der User sehen oder ausprobieren muss
 
 ## Seite ändern
 
-Quelle in `seite/` dieses Skills (`index.html`, `app.js`, `app.css`). Nach Änderungen dort alle drei veröffentlichen (`file_path` = `seite/index.html`, `files` mit `app.js`, `app.css`); `daten/` und `eingaben/` nie mitschicken.
+Quelle ist `seite/index.html` dieses Skills (CSS und Skript stehen darin). Nach Änderungen die Datei ins Arbeits- oder Scratchpad-Verzeichnis kopieren und als `file_path` veröffentlichen; `daten/` und `eingaben/` nie mitschicken.
