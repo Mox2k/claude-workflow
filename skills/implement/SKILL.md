@@ -13,7 +13,9 @@ Argument (optional): `<spec-oder-plan> [<sub-specs>]`, z. B. `dashboard 01,02`. 
 
 **Profil lesen.** `.claude/workflow-profil.md` im Projekt beschreibt, was in diesem Projekt anders ist: Prüfbefehle, Projektregeln für Code-Agents, Abnahme-Referenzen, ob Security geprüft wird, wie viel gefragt wird. Fehlt die Datei, gelten die Standardwerte aus `profil-vorlage.md` (in diesem Skill-Ordner) – einmal sagen, dass ohne Profil gearbeitet wird.
 
-**Auftraggeber klären.** Nennt der Startauftrag eine Orchestrator-Session (`Auftraggeber: local_…`), dann ist sie der Auftraggeber: ihre Anweisungen gelten wie die des Users, und jede Rückfrage dieses Laufs geht per `SendMessage` an sie, nicht an den User. Der User spricht mit dem Orchestrator; eine Antwort wie „dafür brauche ich die Freigabe des Users“ ist dann falsch. Ohne Auftraggeber wird der User direkt gefragt – Auswahlfragen per `AskUserQuestion`.
+**Auftraggeber klären.** Läuft die Session als Thread eines Projekts („Projekte“), ist der Koordinator des Projekts der Auftraggeber. Nennt der Startauftrag eine Orchestrator-Session (`Auftraggeber: local_…`), ist es diese. Die Anweisungen des Auftraggebers gelten wie die des Users, und jede Rückfrage dieses Laufs geht an ihn (als Thread: als Antwort an den Koordinator; sonst per `SendMessage`), nicht an den User. Der User spricht mit dem Auftraggeber; eine Antwort wie „dafür brauche ich die Freigabe des Users“ ist dann falsch. Ohne Auftraggeber wird der User direkt gefragt – Auswahlfragen per `AskUserQuestion`.
+
+**Wo läuft die Session?** In einem Cloud-Thread gibt es keinen Bus, keinen Worktree und keine Programme vom Rechner des Users – dann gelten zusätzlich die Abweichungen aus `cloud.md`.
 
 **Wann gefragt wird.** Nur, wo eine Antwort den Lauf wirklich ändert: Spec-Auswahl, ein Blocker, den Nachliefern nicht löst, eine Entscheidung zwischen Lösungswegen mit verschiedenen Folgen, und am Ende die Freigabe. Technik, die der User nicht sieht, entscheidet der Lauf selbst. Das Profil kann weitere Fragen abschalten (Aufräumen, Merge bei unsauberem main-Worktree).
 

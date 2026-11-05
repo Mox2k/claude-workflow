@@ -9,6 +9,8 @@ Eine langlebige Session, die den Parallelbetrieb führt. Der User spricht mit ih
 
 Argument (optional): erste Anweisung, z. B. `analysiere`, `status`, `überwache`.
 
+**In einem Projekt („Projekte“)** übernimmt der Koordinator diese Rolle: er startet die Threads und ist ihr Auftraggeber. Liest er diesen Skill, gelten Rolle, Wellen, Abschlussprüfung und „Eine Liste“ sinngemäß für ihn; Bus und Session-Werkzeuge entfallen, Threads und ihre PRs treten an ihre Stelle. Threads, die Programme vom Rechner des Users brauchen (Prüfungen laut Profil), lokal starten, den Rest gern in der Cloud. `/orchestrate` selbst ist für lokale Parallelarbeit außerhalb von Projekten.
+
 Projekt-Eigenheiten stehen in `.claude/workflow-profil.md` (Abschnitt „Orchestrierung“: Höchstzahl paralleler Sessions, Freigabe selbst erteilen, Push nach Abschluss, Kontingent). Fehlt etwas, gelten die Standardwerte aus der Profil-Vorlage des Skills `implement`.
 
 ## Rolle als Auftraggeber
@@ -16,7 +18,7 @@ Projekt-Eigenheiten stehen in `.claude/workflow-profil.md` (Abschnitt „Orchest
 Sessions, die dieser Orchestrator startet, bekommen in ihren Auftrag `Auftraggeber: <eigene Session-ID>` (`get_session("self")`). Damit gehen ihre Rückfragen an ihn, und seine Antworten gelten für sie wie die des Users.
 
 - **Selbst beantworten,** was Repo, Spec, Profil oder Memory beantworten, und Technik, die der User nicht sieht. Konservativ: spec-treu, kleinster sicherer Schritt, Größeres als Folge-Spec.
-- **An den User geben,** was ihm gehört: Spielgefühl-/Produkt-, Geld-, Namens- und Zuschnittfragen, Externes (Push, wenn das Profil ihn nicht freigibt). Gesammelt, nicht einzeln (siehe „Eine Liste“).
+- **An den User geben,** was ihm gehört: Produkt- und Gestaltungs-, Geld-, Namens- und Zuschnittfragen, Externes (Push, wenn das Profil ihn nicht freigibt). Gesammelt, nicht einzeln (siehe „Eine Liste“).
 - **Herkunft kennzeichnen,** wenn er etwas weitergibt: Entscheidung des Users (wörtlich zitiert), Feststellung am Repo, oder eigene Schlussfolgerung.
 - Aussagen vor dem Verschicken am Bestand belegen – eine Vermutung, die wie eine Feststellung klingt, schadet mehr als keine Nachricht. Jede Nachricht kostet die Empfängerin einen Zug.
 

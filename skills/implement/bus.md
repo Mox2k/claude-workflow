@@ -56,7 +56,7 @@ Steht im Eintrag `status: pausiert` oder ein Hinweis auf eine Pause des Users, o
 
 Kandidat ist ein Branch `implement/*`, der **keinen Bus-Eintrag** hat und **vollständig in `main`** ist (`git branch --merged main`). Beides zählt: bei einem Feature-Ordner ist der Branch nach der ersten Sub-Spec schon in `main`, die Session arbeitet aber weiter – nur der fehlende Eintrag beweist, dass sie fertig ist. Ein verwaister Eintrag zählt als vorhanden.
 
-Entfernen mit `git worktree remove <pfad>` (entfällt, wenn es keinen Worktree mehr gibt) und `git branch -d <branch>` (nie `-D`: das kleine `-d` verweigert, falls doch etwas nicht gemergt ist). Uncommittete Änderungen im Worktree → stehen lassen und nennen. Ob vorher gefragt wird, sagt das Profil (`Aufräumen`). Liegen im Worktree Clips oder Abnahme-Videos, sie vorher nennen.
+Entfernen mit `git worktree remove <pfad>` (entfällt, wenn es keinen Worktree mehr gibt) und `git branch -d <branch>` (nie `-D`: das kleine `-d` verweigert, falls doch etwas nicht gemergt ist). Uncommittete Änderungen im Worktree → stehen lassen und nennen. Ob vorher gefragt wird, sagt das Profil (`Aufräumen`). Liegt im Worktree ungesichertes Abnahme-Material (Videos, Bilder), es vorher nennen.
 
 Eine Session entfernt nie ihren eigenen Worktree – sie arbeitet darin.
 

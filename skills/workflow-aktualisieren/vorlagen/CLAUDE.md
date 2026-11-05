@@ -20,10 +20,10 @@
 
 ## Workflow
 
-Die Workflow-Skills (`/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/browser-test`, `/debugging`, `/security-check`, `/shutdown`, `/workflow-aktualisieren`) kommen aus dem zentralen Repo `Mox2k/claude-workflow`. Der SessionStart-Hook `.claude/hooks/workflow-sync.sh` holt bei jedem Start den neuesten Stand nach `~/.claude/skills/` – lokal und in Cloud-Sessions.
+Die Workflow-Skills (`/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/browser-test`, `/debugging`, `/security-check`, `/shutdown`, `/workflow-aktualisieren`) sind Konto-Skills der Claude-App – so hat sie jede Session und jeder Thread, lokal und in der Cloud. Gepflegt werden sie im Repo `Mox2k/claude-workflow`; geändert wird dort, dann neu in die App hochgeladen.
 
-- Workflow ändern: im zentralen Repo, committen, pushen – gilt dann für alle Projekte. Die Kopien unter `~/.claude/skills/` werden beim nächsten Start überschrieben.
 - Was nur für dieses Projekt gilt, gehört ins Profil, nicht in den Workflow.
-- Projekt-eigene Skills liegen versioniert in `.claude/skills/` dieses Repos und bleiben hier.
+- Projekt-eigene Skills liegen versioniert in `.claude/skills/` dieses Repos. Lokale Sessions laden sie selbst; **in einem Cloud-Thread fehlen sie** – dort bei Bedarf `.claude/skills/<name>/SKILL.md` lesen und befolgen.
+- In einem Cloud-Thread laufen Programme vom Rechner des Users nicht; Prüfungen, die sie brauchen (siehe Profil), als offen melden, nicht als bestanden.
 
 Das Profil gilt in jeder Session, nicht nur im Workflow: @.claude/workflow-profil.md

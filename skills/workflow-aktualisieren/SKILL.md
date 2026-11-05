@@ -1,6 +1,6 @@
 ---
 name: workflow-aktualisieren
-description: Ein Projekt auf den zentralen Workflow (Mox2k/claude-workflow) bringen oder neu dafür einrichten – Start-Hook eintragen, alte Workflow-Commands entfernen, Projekt-Skills versionieren, CLAUDE.md auf kurze Orientierung bringen, Projektprofil anlegen, Projekt-Memory aufräumen, bei neuem Projekt Roadmap anlegen. Nutzen, wenn der User /workflow-aktualisieren aufruft, ein altes Projekt umstellen oder ein neues Projekt anlegen will.
+description: Ein Projekt auf den zentralen Workflow (Mox2k/claude-workflow) bringen oder neu dafür einrichten – alte Workflow-Commands und Start-Hooks entfernen, Projekt-Skills versionieren, CLAUDE.md auf kurze Orientierung bringen, Projektprofil anlegen, Projekt-Memory aufräumen, bei neuem Projekt Roadmap anlegen. Nutzen, wenn der User /workflow-aktualisieren aufruft, ein altes Projekt umstellen oder ein neues Projekt anlegen will.
 ---
 
 # /workflow-aktualisieren
@@ -9,15 +9,11 @@ Bringt das aktuelle Projekt auf den Stand des zentralen Workflows. Läuft in alt
 
 Erst den Stand erfassen und dem User als kurze Liste zeigen, was sich ändern wird; nach seinem Ja alles umsetzen. Fremde, uncommittete Änderungen im Projekt nie mit committen.
 
-## 1. Start-Hook
+## 1. Woher der Workflow kommt
 
-`vorlagen/workflow-sync.sh` (dieser Skill-Ordner) nach `.claude/hooks/workflow-sync.sh` kopieren. In `.claude/settings.json` den Eintrag ergänzen – vorhandene Einstellungen behalten, nur mergen:
-
-```json
-"hooks": { "SessionStart": [ { "hooks": [ { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/workflow-sync.sh\"" } ] } ] }
-```
-
-Er holt bei jedem Session-Start den neuesten Workflow nach `~/.claude/skills/`, lokal und in Cloud-Sessions.
+Die Workflow-Skills sind Konto-Skills der Claude-App (nur die erreichen auch Cloud-Threads). Ins Projekt kommt davon nichts. Prüfen und aufräumen:
+- Steht ein alter Start-Hook `workflow-sync.sh` in `.claude/settings.json` oder `.claude/hooks/`: entfernen, andere Einstellungen behalten.
+- Fehlen Workflow-Skills in der eigenen Skill-Liste: dem User sagen, dass er die Pakete aus `Mox2k/claude-workflow` (`pakete.sh`) in der App hochladen muss.
 
 ## 2. Alte Workflow-Commands entfernen
 
@@ -27,7 +23,7 @@ In `.claude/commands/` die Dateien löschen, die jetzt als Skill kommen: `prime`
 
 Alles unter `.claude/skills/` gehört ins Projekt-Repo, damit Cloud-Sessions es haben. In `.gitignore` Einträge entfernen, die `.claude/skills/` ausschließen; `.agents/` bleibt ignoriert (per `npx skills` installierte Skills liegen dort und sind unter `.claude/skills/` verlinkt – Git speichert die Dateien über den Link). Nur bisher unversionierte Skill-Dateien hinzufügen, keine fremden Änderungen an versionierten. Vorher nach Schlüsseln und Tokens suchen; Treffer nicht committen, sondern nennen.
 
-Workflow-Skills (siehe Schritt 2) gehören nicht ins Projekt – liegt eine Kopie davon in `.claude/skills/`, entfernen.
+Workflow-Skills (siehe Schritt 2) gehören nicht ins Projekt – liegt eine Kopie davon in `.claude/skills/`, entfernen. Cloud-Threads laden `.claude/skills/` nicht; dafür steht in der CLAUDE.md der Hinweis, die `SKILL.md` dort bei Bedarf selbst zu lesen.
 
 ## 4. CLAUDE.md
 
@@ -61,4 +57,4 @@ Kein Git-Repo: anbieten, eins anzulegen (ohne Git kein Parallelbetrieb und kein 
 
 ## 8. Abschluss
 
-Ein Commit mit allen Änderungen dieses Laufs. Bericht: was geändert, was übersprungen, was offen. Hinweis: Cloud-Sessions sehen Hook und Skills erst nach dem Push; pushen nur auf Wort des Users.
+Ein Commit mit allen Änderungen dieses Laufs. Bericht: was geändert, was übersprungen, was offen. Hinweis: Cloud-Threads sehen CLAUDE.md, Profil und Projekt-Skills erst nach dem Push; pushen nur auf Wort des Users.
