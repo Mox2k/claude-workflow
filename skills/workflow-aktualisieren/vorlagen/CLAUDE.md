@@ -25,3 +25,5 @@ Die Workflow-Skills (`/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/br
 - Workflow ändern: im zentralen Repo, committen, pushen – gilt dann für alle Projekte. Die Kopien unter `~/.claude/skills/` werden beim nächsten Start überschrieben.
 - Was nur für dieses Projekt gilt, gehört ins Profil, nicht in den Workflow.
 - Projekt-eigene Skills liegen versioniert in `.claude/skills/` dieses Repos und bleiben hier.
+
+Das Profil gilt in jeder Session, nicht nur im Workflow: @.claude/workflow-profil.md
