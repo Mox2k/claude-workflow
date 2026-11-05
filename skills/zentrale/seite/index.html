@@ -76,7 +76,7 @@ body.dragging{user-select:none;cursor:grabbing}
 .mine{font-size:11.5px;color:var(--you);font-weight:700}
 .det{display:none;flex-direction:column;gap:8px;padding-top:4px}
 .item.open .det{display:flex}
-.det p{margin:0;font-size:14px;max-width:65ch}
+.det p,.abbody>p{margin:0;font-size:14px;max-width:65ch}
 .cmd{display:flex;background:var(--sunk);border-radius:6px;min-width:0}
 .cmd code{font:12.5px var(--mono);padding:6px 9px;flex:1;min-width:0;overflow-wrap:anywhere;user-select:all}
 .cmd button{border:0;border-left:1px solid var(--line);background:transparent;padding:0 12px;font-weight:700;font-size:12.5px;color:var(--accent);white-space:nowrap}
@@ -301,7 +301,7 @@ const AF=[["offen","Offen"],["talk","Besprechen"],["fix","Ändern"],["ok","Passt
 function abCard(a){
   const c=cur(),u=c.e.urteile[a.id]&&urteilOf(a)?c.e.urteile[a.id]:{},st=abState(a),bl=blockersA(a);
   const stage=a.stufe==="nachpruefen"?3:a.stufe==="beheben"?2:1;
-  const pips=`<div class="pips">${[1,2,3].map(i=>`<b class="${i<stage?"on":i===stage?"now":""}"></b>`).join("")}<span>${["Ansehen","Claude behebt","Nachprüfen"][stage-1]} · aus Nr. ${esc(a.aus)}</span></div>`;
+  const pips=`<div class="pips">${[1,2,3].map(i=>`<b class="${i<stage?"on":i===stage?"now":""}"></b>`).join("")}<span>${["Ansehen","Claude behebt","Nachprüfen"][stage-1]}${a.aus?` · aus Nr. ${esc(a.aus)}`:""}</span></div>`;
   const vt={ok:"passt",talk:"besprechen",fix:"ändern"}[u.v];
   const prompt=u.v&&u.v!=="ok"?(u.v==="fix"?`Nacharbeit aus der Abnahme „${a.t}“: `:`Lass uns über die Abnahme „${a.t}“ sprechen: `)+(u.note||"…"):"";
   return `<div class="ab${ui.open.has(a.id)?" open":""}${bl.length?" blocked":""}" id="ab-${esc(a.id)}" data-id="${esc(a.id)}" data-list="ab"><span class="grip" aria-label="Ziehen zum Sortieren">${CH.grip}</span><div class="in">
@@ -310,6 +310,7 @@ function abCard(a){
     <div class="abbody">
     ${a.zurueck?`<div class="fixed"><b>Von dir zurückgeholt.</b> Claude legt beim Abholen die Prüfschritte an. <button class="btn" type="button" data-unback="${esc(a.zurueck)}" style="margin-top:6px">Doch nicht, wieder ins Archiv</button></div>`:""}
     ${a.behoben?`<div class="fixed"><b>${stage===2?"In Arbeit":"Behoben"}:</b> ${esc(a.behoben)}</div>`:""}
+    ${a.info?`<p>${esc(a.info)}</p>`:""}
     ${a.schritte?`<div class="steps">${a.schritte.map((s,i)=>`<span class="n">${i+1}</span><div>${esc(s[0])}<div class="e">${esc(s[1])}</div></div>`).join("")}</div>`:""}
     ${st==="ok"?`<button type="button" class="btn" data-vab="${esc(a.id)}|ok">Zurück auf „Offen“</button>`:st==="claude"||bl.length?"":`<div class="verdict"><button type="button" class="v-ok" data-vab="${esc(a.id)}|ok" aria-pressed="${u.v==="ok"}">Passt</button><button type="button" class="v-talk" data-vab="${esc(a.id)}|talk" aria-pressed="${u.v==="talk"}">Besprechen</button><button type="button" class="v-fix" data-vab="${esc(a.id)}|fix" aria-pressed="${u.v==="fix"}">Ändern</button></div>`}
     ${u.v&&u.v!=="ok"?`<textarea id="note-${esc(a.id)}" data-note="${esc(a.id)}" placeholder="${u.v==="fix"?"Was soll anders werden?":"Worüber willst du sprechen?"}">${esc(u.note||"")}</textarea>${cmdBox(prompt)}<span class="saved">Claude holt das beim nächsten Start im Projekt selbst ab. Mit dem Aufruf startest du sofort.</span>`:""}

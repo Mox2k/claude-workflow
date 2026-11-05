@@ -30,7 +30,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
  "vorhaben":[{"nr":"37","b":"B5","m":"M1","t":"Titel","kurz":"Stichwort","s":"Idee","groesse":"klein",
    "wartet":["36"],"aktiv":{"art":"Implementierung","seit":"21:15"},"info":"1–2 Sätze","cmd":"/brainstorm …","spec":"docs/specs/…","fertig":"2026-11-04"}],
  "abnahme":[{"id":"xy-ab3","gruppe":"Sensor","t":"Titel","aus":"196","stufe":"ansehen",
-   "schritte":[["tun","erwartet"]],"wartet":["xy-ab2"],"behoben":"…","selbst":"wie Claude es prüft"}],
+   "schritte":[["tun","erwartet"]],"wartet":["xy-ab2"],"behoben":"…","selbst":"wie Claude es prüft","info":"1–2 Sätze"}],
  "themen":["offenes Thema als Satz"],
  "abgeholt":{"<abnahme-id>":"<zeit des abgeholten Urteils>","z:<nr>":"<zeit>"},
  "ideen_abgeholt":["idee-…"]}
@@ -42,6 +42,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 - `groesse`: `klein` (eine Session) oder `groß`.
 - `aktiv`: nur während eine Session daran arbeitet (`Brainstorm` oder `Implementierung`, Uhrzeit); am Ende entfernen.
 - `stufe`: `ansehen` → nach „Ändern“ `beheben` (mit `behoben`: was gerade passiert) → `nachpruefen` (mit `behoben`: was geändert wurde). „Passt“ → Punkt entfernen.
+- `info` (Abnahme, optional): 1–2 Sätze Hintergrund, ggf. „Seite: /…“; aufgeklappt über den Schritten.
 - `selbst`: Claude prüft den Punkt selbst (Test, Browser, Clip); er erscheint nicht beim User.
 - Reihenfolge der Arrays = Vorschlag; die Seite sortiert nach `eingaben/<id>.json` → `reihenfolge`.
 
