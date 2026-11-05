@@ -1,8 +1,8 @@
 <title>Projektzentrale</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="app.css">
-<!-- Hülle: Aussehen in app.css, Ablauf in app.js, Daten in daten/ und eingaben/ -->
+<style>:where(body){background:#eef1f3}@media (prefers-color-scheme:dark){:where(:root:not([data-theme="light"]) body){background:#12181c}}:where(:root[data-theme="dark"] body){background:#12181c}</style>
+<!-- Hülle: Aussehen (app.css) und Ablauf (app.js) holt das Skript unten, Daten liegen in daten/ und eingaben/ -->
 <div class="shell">
   <div class="top">
     <div class="projects" id="projects" role="group" aria-label="Projekt"></div>
@@ -19,4 +19,11 @@
   <div class="r"><button class="btn" id="ideaCancel" type="button">Abbrechen</button><button class="btn primary" id="ideaSave" type="button">Idee eintragen</button></div>
 </div>
 <div class="toast" id="toast" hidden></div>
-<script src="app.js"></script>
+<script>
+/* Fremde Skriptdateien lässt die Seite nicht zu – deshalb Aussehen und Ablauf als Text holen und einsetzen. */
+(async()=>{const m=document.getElementById("main");const t=setTimeout(()=>{m.innerHTML='<div class="empty">Die Seite lädt ungewöhnlich lange. Bitte neu öffnen.</div>'},12000);
+try{const [c,j]=await Promise.all(["app.css","app.js"].map(f=>fetch(f).then(r=>{if(!r.ok)throw new Error(f+" "+r.status);return r.text()})));
+const st=document.createElement("style");st.textContent=c;document.head.appendChild(st);
+const s=document.createElement("script");s.textContent=j;document.body.appendChild(s);clearTimeout(t)}
+catch(e){clearTimeout(t);m.innerHTML='<div class="empty">Die Seite konnte nicht geladen werden ('+String(e.message||e).replace(/[<>&]/g,"")+').</div>'}})();
+</script>
