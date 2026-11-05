@@ -1,17 +1,19 @@
 # claude-workflow
 
-Allgemeiner Claude-Code-Workflow (Skills), gleich für alle Projekte.
+Allgemeiner Claude-Code-Workflow als Skills, gleich für alle Projekte: `/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/browser-test`, `/debugging`, `/security-check`, `/shutdown`, `/workflow-aktualisieren`.
 
-- `skills/<name>/` — Workflow-Skills. Projekt-eigene Skills (z. B. `werft`) gehören **nicht** hierher, sondern ins jeweilige Projekt-Repo.
-- `sync.sh` — installiert die Skills benutzerweit nach `~/.claude/skills/`.
-- `projekt-hook/workflow-sync.sh` — Vorlage für den SessionStart-Hook, der in jedes Projekt unter `.claude/hooks/` kommt und bei jedem Session-Start (lokal und in der Cloud) den neuesten Stand holt.
+- `skills/<name>/` – die Workflow-Skills. Projekt-eigene Skills (z. B. `werft`) gehören **nicht** hierher, sondern versioniert ins jeweilige Projekt-Repo.
+- `sync.sh` – installiert die Skills benutzerweit nach `~/.claude/skills/`.
+- `skills/workflow-aktualisieren/vorlagen/` – Start-Hook, CLAUDE.md- und Roadmap-Vorlage für Projekte.
 
-Einbindung in ein Projekt, `.claude/settings.json`:
+## Einrichten
 
-```json
-"hooks": {
-  "SessionStart": [
-    { "hooks": [ { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/workflow-sync.sh\"" } ] }
-  ]
-}
+**Neuer Rechner** (einmal, in Git Bash):
+
+```bash
+git clone https://github.com/Mox2k/claude-workflow.git ~/.claude/claude-workflow && bash ~/.claude/claude-workflow/sync.sh
 ```
+
+**Projekt** (neu oder alt): im Projekt `/workflow-aktualisieren` aufrufen. Er trägt den SessionStart-Hook ein, der bei jedem Session-Start – lokal und in der Cloud – den neuesten Stand holt, und bringt CLAUDE.md, Profil und Memory auf den Workflow.
+
+**Workflow ändern:** hier committen und pushen; jedes Projekt holt es beim nächsten Session-Start.
