@@ -30,6 +30,12 @@ Spec-Widersprüche und Lösungswege: fragen | selbst entscheiden (im Bericht nen
 
 ## Leistungsmessung
 aus | Befehl, Budgets, Abweichungsgrenze (oder Verweis)
+
+## Orchestrierung
+Höchstzahl paralleler Sessions: <Zahl>
+Freigabe selbst erteilen: nein | ja (wenn die Repo-Prüfung passt)
+Nach Abschluss: <z. B. „✓“ im Titel, main pushen, archivieren>
+Kontingent: <z. B. nach 5-Stunden-Limit steuern, Ziel ~85–90 % beim Reset>
 ```
 
 ## Standardwerte
@@ -45,6 +51,10 @@ aus | Befehl, Budgets, Abweichungsgrenze (oder Verweis)
 | Merge bei unsauberem main-Worktree | fragen |
 | Spec-Widersprüche | fragen |
 | Leistungsmessung | aus |
+| Höchstzahl paralleler Sessions | 3 |
+| Freigabe selbst erteilen | nein – Freigabe gehört dem User |
+| Nach Abschluss | nichts automatisch; Push nur auf Zuruf |
+| Kontingent | nicht steuern |
 
 ## Sicherheitsregeln (bei Security „an“ jedem Code-Agent mitgeben)
 
