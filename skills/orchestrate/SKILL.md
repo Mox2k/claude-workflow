@@ -30,7 +30,7 @@ Er sieht nur Bus, Repo und die Transkripte lokaler Sessions, keine Cloud-Session
 - je Session eine Zeile: Spec, Schritt, Status, Alter (aus `epoch:` gerechnet)
 - gefüllte `## Dateien` gegeneinander halten; leere Abschnitte sind keine Auskunft, Aussagen dann als Schätzung kennzeichnen
 - verwaiste Einträge (> 60 min) und `merge.lock` (> 30 min) nur markieren; ein Lock, dessen Eigentümer bei Schritt 8–9 steht, integriert gerade
-- Roadmap Abschnitt 4 gegen die Dateilage: Spec ohne Zeile, Zeile ohne Spec, Spec in `archive/done/` ohne `Gebaut`, Bereich `—`. Nur melden – maßgeblich ist Roadmap Abschnitt 0.
+- Vorhaben der Projektzentrale (Skill `zentrale`, „Lesen“) gegen die Dateilage: Spec ohne Vorhaben, Vorhaben mit `spec`, die es nicht gibt, Spec in `archive/done/` ohne `Gebaut`, Vorhaben ohne Bereich, `aktiv` ohne laufende Session. Nur melden – maßgeblich sind die Pflegeregeln der Zentrale.
 - `git rev-list --count origin/main..main` (Push-Stand)
 
 Dann eine Zeile, was möglich ist, und warten. Analyse und Überwachung laufen nur auf Ansage.
@@ -41,7 +41,7 @@ Dann eine Zeile, was möglich ist, und warten. Analyse und Überwachung laufen n
 
 **3. Starten.** Auf Ja des Users je Session `start_session` (`user_asked`, `fresh`, eigener Worktree, Titel kurz nach der Sache). Auftrag: `/implement <spec> [<sub-specs>]`, dazu `Auftraggeber: <eigene ID>` und Zusätze mit Herkunft (z. B. ein Punkt, den eine Nachbar-Spec zugewiesen hat). Ohne Session-Werkzeug: Titel und Aufruf je als eigenen Codeblock zum Kopieren ausgeben.
 
-**4. Überwachen** (auf Ansage). Selbstgetakteter Loop, 20–30 min (enger nur kurz vor einem Merge). Je Durchlauf: Bus (verwaist, Lock-Hänger, Kollisionen), neue Merges, Kontingent laut Profil, und ob ein neuer Lauf startklar wurde – dann sofort fragen bzw. starten, sonst bleibt ein Platz ungenutzt. Ein kurz unsauberer Haupt-Worktree ist normal (eine Session schreibt gerade Roadmap/Log); erst minutenlang ist er ein Hänger. Ende, wenn alles gemergt ist oder nur noch auf den User wartet – das sagen.
+**4. Überwachen** (auf Ansage). Selbstgetakteter Loop, 20–30 min (enger nur kurz vor einem Merge). Je Durchlauf: Bus (verwaist, Lock-Hänger, Kollisionen), neue Merges, Kontingent laut Profil, und ob ein neuer Lauf startklar wurde – dann sofort fragen bzw. starten, sonst bleibt ein Platz ungenutzt. Ein kurz unsauberer Haupt-Worktree ist normal (eine Session schreibt gerade das Log); erst minutenlang ist er ein Hänger. Ende, wenn alles gemergt ist oder nur noch auf den User wartet – das sagen.
 
 **5. Abschluss prüfen und freigeben** nach `abschluss.md`: erst am Repo messen, dann fragen. Fertig ist eine Spec erst mit verschwundenem Bus-Eintrag **und** Log-Zeile.
 
@@ -51,4 +51,4 @@ Was dem User gehört, wird gesammelt und gebündelt vorgelegt: **Entscheidungen*
 
 ## Was er nicht tut
 
-Er claimt nichts (kein Bus-Eintrag, Worktree, Branch), ändert keine fremden Bus-Einträge, schreibt keinen Code und keine Roadmap. Er schreibt genau eine Datei: den Reihenfolge-Cache. Ein Abbruch hinterlässt deshalb keinen halben Zustand.
+Er claimt nichts (kein Bus-Eintrag, Worktree, Branch), ändert keine fremden Bus-Einträge, schreibt keinen Code und nichts in die Zentrale. Er schreibt genau eine Datei: den Reihenfolge-Cache. Ein Abbruch hinterlässt deshalb keinen halben Zustand.

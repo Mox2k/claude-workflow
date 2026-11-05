@@ -9,7 +9,11 @@ Jedes Projekt kann `.claude/workflow-profil.md` anlegen. Fehlt ein Feld oder die
 <ein Satz: was das Projekt ist, z. B. Singleplayer-Spiel, Web-App mit Kundendaten, Python-CLI>
 
 ## Befehle
-<Tests, Build, Linter – oder Verweis, z. B. „docs/projekt-roadmap.md Abschnitt 2, Tabelle Befehle“>
+<Tests, Build, Linter – oder Verweis, z. B. „`docs/projekt.md`, Befehle“>
+
+## Zentrale
+URL: <Link der Projektzentrale>
+Projekt: <kennung>
 
 ## Rechenlast
 <wie schwere Läufe gestartet werden, z. B. über ein Lock-Skript; Standard: direkt>
@@ -42,7 +46,8 @@ Kontingent: <z. B. nach 5-Stunden-Limit steuern, Ziel ~85–90 % beim Reset>
 
 | Feld | Standard |
 |---|---|
-| Befehle | aus `docs/projekt-roadmap.md` Abschnitt 2 „Befehle“; fehlt das, einmal aus dem Repo ermitteln (`package.json`, `Makefile`, `pyproject.toml`, `build.gradle` …), nutzen und in die Roadmap eintragen. Nichts Ausführbares → im Bericht „ohne Verifikation“ |
+| Befehle | aus `docs/projekt.md`, Befehle; fehlt das, einmal aus dem Repo ermitteln (`package.json`, `Makefile`, `pyproject.toml`, `build.gradle` …), nutzen und dort eintragen. Nichts Ausführbares → im Bericht „ohne Verifikation“ |
+| Zentrale | keine – nichts in die Zentrale schreiben, `/projekt-setup` empfehlen |
 | Rechenlast | direkt ausführen |
 | Projektregeln | keine |
 | Abnahme-Referenzen | keine; Review prüft gegen Spec und Plan |

@@ -20,7 +20,7 @@ Für Code, der woanders entstand (Cloud-Session, anderer Rechner, abgebrochener 
 - Claim wie üblich, Worktree auf einem Branch `pruef/<spec>` vom fertigen Branch statt von `main`.
 - Schritte 1–6 entfallen. Weiter mit `git merge main` (Konflikte wie in `integration.md`), dann Schritt 7.
 - **Lief schon ein Review** (Commit oder Übergabe nennt ihn): kein zweiter voller Review. Verifikation lokal vollständig ausführen (die Cloud hat oft andere Werkzeuge); der Reviewer bekommt nur die Merge-Konfliktstellen, den Diff seit dem dort geprüften Stand und die Abnahme-Referenzen. Lief keiner: normaler Final-Review.
-- Weiter mit Schritt 8.
+- Weiter mit Schritt 8. Schritt 9 setzt in der Zentrale `Gebaut` und die Abnahme-Punkte für das Vorhaben des Branches – auch wenn der Branch aus der Cloud kam (dort entfällt das, `cloud.md`).
 
 ## Angebrochener Lauf
 

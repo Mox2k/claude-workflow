@@ -2,7 +2,7 @@
 
 ## Bootstrap (Katalog fehlt)
 
-Stack, Start-Befehl und Verzeichnisse aus Roadmap Abschnitt 2 übernehmen, nicht erneut fragen. Den Rest erfragen: Kurzbeschreibung, Frontend-/Backend-URL, Hauptfeatures, Login (Test-User und wo die Zugangsdaten liegen). Fehlt Stack oder Start-Befehl in der Roadmap, dort nachtragen. Unklare Routen → Code-Inventur anbieten. Features nach dem Zuschnitt in `bausteine.md` als `F-NN` anlegen, fehlende Details als Stub. Kam der Aufruf mit Modus-Argument, danach direkt weiter.
+Stack, Start-Befehl und Verzeichnisse aus `docs/projekt.md` („Projektstruktur“, Befehle) übernehmen, nicht erneut fragen. Den Rest erfragen: Kurzbeschreibung, Frontend-/Backend-URL, Hauptfeatures, Login (Test-User und wo die Zugangsdaten liegen). Fehlt Stack oder Start-Befehl dort, nachtragen. Unklare Routen → Code-Inventur anbieten. Features nach dem Zuschnitt in `bausteine.md` als `F-NN` anlegen, fehlende Details als Stub. Kam der Aufruf mit Modus-Argument, danach direkt weiter.
 
 ## Test
 

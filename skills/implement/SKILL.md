@@ -28,9 +28,9 @@ Die Schritte heißen in Meldungen `Schritt N von 9`. Statuszeile, eine Zeile, nu
 
 **0. Lage.** Mit Git: Bus lesen und andere laufende Sessions kurz auflisten, verwaiste Einträge und aufräumbare Branches behandeln – alles in `bus.md`. Ohne Git: `ohne-git.md`.
 
-**1. Spec wählen.** Queue: `docs/superpowers/specs/` (ohne `in-progress/`), `specs/followup/` (Folge-Specs aus früheren Läufen) und `docs/superpowers/plans/`. Nicht wählbar: Specs mit `status: in-progress` (Brainstorming unfertig) und alles mit aktivem Bus-Eintrag. Zeigen als drei Listen (Specs `1, 2…`, Follow-ups `F1…`, Pläne `P1…`) plus die Reihenfolge-Empfehlung von `/orchestrate`, falls vorhanden (`bus.md`). Feature-Ordner, Plan statt Spec und Prüflauf: `sonderfaelle.md`.
+**1. Spec wählen.** Queue: `docs/specs/` (ohne `in-progress/`), `specs/followup/` (Folge-Specs aus früheren Läufen) und `docs/plans/`. Nicht wählbar: Specs mit `status: in-progress` (Brainstorming unfertig) und alles mit aktivem Bus-Eintrag. Zeigen als drei Listen (Specs `1, 2…`, Follow-ups `F1…`, Pläne `P1…`) plus die Reihenfolge-Empfehlung von `/orchestrate`, falls vorhanden (`bus.md`). Feature-Ordner, Plan statt Spec und Prüflauf: `sonderfaelle.md`.
 
-**2. Übernehmen.** In dieser Reihenfolge, weil jeder Schritt den vorigen braucht: Bus-Eintrag exklusiv anlegen (der Claim gegenüber anderen Sessions), Worktree `../<repo>-wt/<spec>` auf Branch `implement/<spec>` von `main`, dann die Spec im Worktree nach `specs/in-progress/` verschieben und committen. Ab jetzt nur noch im Worktree arbeiten – im Hauptverzeichnis würden sich parallele Sessions gegenseitig die Dateien verschieben. Jede Verschiebung und jeder Plan wird sofort committet, sonst blockiert er später den Merge.
+**2. Übernehmen.** In dieser Reihenfolge, weil jeder Schritt den vorigen braucht: Bus-Eintrag exklusiv anlegen (der Claim gegenüber anderen Sessions), Worktree `../<repo>-wt/<spec>` auf Branch `implement/<spec>` von `main`, dann die Spec im Worktree nach `specs/in-progress/` verschieben und committen. In der Projektzentrale das Vorhaben der Spec auf `aktiv` = `Implementierung` mit Uhrzeit setzen (Skill `zentrale`; fehlt der Abschnitt „Zentrale“ im Profil, entfällt das, einmal sagen). Ab jetzt nur noch im Worktree arbeiten – im Hauptverzeichnis würden sich parallele Sessions gegenseitig die Dateien verschieben. Jede Verschiebung und jeder Plan wird sofort committet, sonst blockiert er später den Merge.
 
 **3. Planen.** Spec lesen, Stufe nennen (eine Zeile Begründung, der Auftraggeber kann überstimmen, warten ist nicht nötig):
 
@@ -63,9 +63,9 @@ Modell und Aufwand: mechanische, voll beschriebene Tasks → Sonnet, `low`; alle
 
 **8. Entscheiden.** Grün = Verifikation sauber und keine offenen Blocker/Major. Rot → Fix-Zyklen nach `review.md`, bis zur Obergrenze der Stufe; danach endet der Lauf rot, Branch und Worktree bleiben stehen. Grün → Spec + Plan nach `archive/done/<YYYY-MM-DD>-<spec>/`, Minors beheben (`review.md`), dann sofort nach `main` integrieren (`integration.md`). Gepusht wird nie.
 
-**9. Abschluss.** Roadmap und Log auf `main` nachziehen (`integration.md`), Bericht, Leistungsmessung falls das Profil sie vorsieht (`leistung.md`), dann Freigabe einholen: „Session abschließen?“ – bei jedem Ausgang, auch rot. Ja → Bus-Eintrag löschen (`bus.md`). Nein → Eintrag bleibt `offen`; entstehen bei der Nacharbeit Commits, läuft die Integration erneut.
+**9. Abschluss.** Log auf `main` nachziehen, Zentrale schreiben – grün: `Gebaut` und Abnahme-Punkte, sonst nur `aktiv` weg (`integration.md`), Bericht, Leistungsmessung falls das Profil sie vorsieht (`leistung.md`), dann Freigabe einholen: „Session abschließen?“ – bei jedem Ausgang, auch rot. Ja → Bus-Eintrag löschen (`bus.md`). Nein → Eintrag bleibt `offen`; entstehen bei der Nacharbeit Commits, läuft die Integration erneut.
 
-Bericht, Ergebnis zuerst, je Punkt eine Zeile: grün/rot, Stufe, was umgesetzt, Verifikation, Review (offene Minors), integriert ja/nein mit Konflikten, Branch + Worktree, `main` läuft lokal voraus (nicht gepusht), Roadmap-Änderung, wer sonst noch läuft.
+Bericht, Ergebnis zuerst, je Punkt eine Zeile: grün/rot, Stufe, was umgesetzt, Verifikation, Review (offene Minors), integriert ja/nein mit Konflikten, Branch + Worktree, `main` läuft lokal voraus (nicht gepusht), Zentrale (Vorhaben, angelegte Abnahme-Punkte), wer sonst noch läuft.
 
 ## Zeiten
 

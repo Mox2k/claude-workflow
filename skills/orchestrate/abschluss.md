@@ -7,7 +7,7 @@ Eine Fertigmeldung wird am Repo geprüft, nicht geglaubt.
 | Branch in `main` | `git rev-list --count main..<branch>` = 0 |
 | Spec in `archive/done/` | Verzeichnis |
 | Log-Zeile | Ende von `implement-log.md` |
-| Roadmap-Zeile `Gebaut`, Spec-Pfad gültig | Abschnitt 4 |
+| Vorhaben `Gebaut`, `aktiv` weg, Abnahme-Punkte angelegt | Zentrale (Skill `zentrale`, „Lesen“) |
 | neue Folge-Spec | `specs/followup/` gegen den vorigen Stand |
 | Reste im Worktree | `git status --porcelain`; nur Zeilenenden (`git diff --ignore-cr-at-eol` leer) sind kein Befund |
 | Tests, Messläufe und Abnahme-Material der Session fertig und gesichert | Bus, Lastweg laut Profil, Abnahme-Ablage |

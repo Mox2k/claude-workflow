@@ -1,6 +1,6 @@
 ---
 name: shutdown
-description: Session sauber beenden – temporäre Dateien entfernen, Projektstruktur in der Roadmap nachziehen, committen, fertige implement-Branches und Worktrees aufräumen, Zusammenfassung. Nutzen, wenn der User /shutdown aufruft oder die Session abschließen will.
+description: Session sauber beenden – temporäre Dateien entfernen, Projektstruktur in docs/projekt.md nachziehen, committen, fertige implement-Branches und Worktrees aufräumen, Zusammenfassung. Nutzen, wenn der User /shutdown aufruft oder die Session abschließen will.
 ---
 
 # /shutdown
@@ -9,9 +9,9 @@ description: Session sauber beenden – temporäre Dateien entfernen, Projektstr
 
 Unversionierte Treffer für `**/.DS_Store`, `**/__pycache__/**`, `**/*.tmp`, `**/*.bak`, `**/*.log` auflisten und löschen. Nie in Fremd- und Build-Verzeichnissen (`node_modules/`, `venv/`, `.venv/`, `vendor/`, `dist/`, `build/`, `target/`, `.git/`), nie Dateien, die Git kennt (`git status --porcelain` gegenhalten), nichts außerhalb der Muster. Der Aufruf von `/shutdown` ist die Freigabe dafür.
 
-## 2. Roadmap
+## 2. Projektstruktur
 
-Nur Abschnitt 2 „Projektstruktur“ nachziehen, wenn diese Session Struktur, Befehle oder Stack geändert hat – nach Abschnitt 0 der Roadmap. Status in Abschnitt 4 setzen `/brainstorm` und `/implement` in dem Moment, in dem er entsteht; eine falsche Zeile hier nur nennen.
+Nur „Projektstruktur“ in `docs/projekt.md` nachziehen, wenn diese Session Struktur, Befehle oder Stack belegbar geändert hat – kurz, eine Zeile je Sache. Planung und Status stehen in der Projektzentrale; dort schreiben `/brainstorm` und `/implement` in dem Moment, in dem etwas entsteht. `/shutdown` schreibt nichts in die Zentrale; ein falscher Eintrag dort (z. B. `aktiv` dieser Session, die nichts mehr tut) wird nur genannt.
 
 ## 3. Git
 

@@ -1,0 +1,22 @@
+<title>Projektzentrale</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="app.css">
+<!-- Hülle: Aussehen in app.css, Ablauf in app.js, Daten in daten/ und eingaben/ -->
+<div class="shell">
+  <div class="top">
+    <div class="projects" id="projects" role="group" aria-label="Projekt"></div>
+    <div class="sub"><span id="stamp"></span><span class="save" id="save"></span></div>
+    <div class="running" id="running" aria-label="Läuft gerade"></div>
+    <div class="views" role="tablist" id="views"></div>
+  </div>
+  <main id="main"><div class="loading">Lädt …</div></main>
+</div>
+<button class="fab" id="fab" type="button" hidden>+ Idee</button>
+<div class="sheet" id="sheet" hidden>
+  <h2 id="sheetH">Neue Idee</h2>
+  <textarea id="ideaText" placeholder="Was soll es geben? Ein, zwei Sätze reichen." aria-label="Idee"></textarea>
+  <div class="r"><button class="btn" id="ideaCancel" type="button">Abbrechen</button><button class="btn primary" id="ideaSave" type="button">Idee eintragen</button></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="app.js"></script>

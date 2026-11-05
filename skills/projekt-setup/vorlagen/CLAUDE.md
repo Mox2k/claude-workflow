@@ -4,8 +4,10 @@
 
 *<Name>* – <ein Satz: was es ist, Stack>. Wo was liegt:
 
-- `docs/projekt-roadmap.md` – Projektstruktur, Befehle (Build, Tests, Linter), Ziele, Status aller Vorhaben. Einzige Doku-Datei; ihr Abschnitt 0 regelt, wer was hineinschreibt.
-- `.claude/workflow-profil.md` – was in diesem Projekt für den Workflow gilt: Prüfbefehle, Projektregeln für Code, Abnahme-Referenzen, Security, Rückfragen.
+- `docs/projekt.md` – Projekt, Ziele, Projektstruktur und Befehle (Build, Tests, Linter; mit Spalte, was in der Cloud läuft).
+- Projektzentrale – Vorhaben, Status, Meilensteine, Abnahme. Link und Projekt-Kennung im Profil, Abschnitt „Zentrale“; gelesen und geschrieben über den Skill `zentrale`.
+- `docs/specs/`, `docs/plans/`, `docs/archive/done/` – Specs, Pläne, Erledigtes; Lauf-Log `docs/implement-log.md`.
+- `.claude/workflow-profil.md` – was in diesem Projekt für den Workflow gilt: Prüfbefehle, Projektregeln für Code, Abnahme-Referenzen, Security, Rückfragen, Zentrale.
 - <weitere wichtige Orte: Design, Doku, Entwürfe>
 
 ## Arbeitsweise
@@ -20,10 +22,10 @@
 
 ## Workflow
 
-Die Workflow-Skills (`/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/browser-test`, `/debugging`, `/security-check`, `/shutdown`, `/workflow-aktualisieren`) sind Konto-Skills der Claude-App – so hat sie jede Session und jeder Thread, lokal und in der Cloud. Gepflegt werden sie im Repo `Mox2k/claude-workflow`; geändert wird dort, dann neu in die App hochgeladen.
+Die Workflow-Skills (`/prime`, `/brainstorm`, `/orchestrate`, `/implement`, `/browser-test`, `/debugging`, `/security-check`, `/shutdown`, `/projekt-setup`, dazu `zentrale`) sind Konto-Skills der Claude-App – so hat sie jede Session und jeder Thread, lokal und in der Cloud. Gepflegt werden sie im Repo `Mox2k/claude-workflow`; geändert wird dort, dann neu in die App hochgeladen.
 
 - Was nur für dieses Projekt gilt, gehört ins Profil, nicht in den Workflow.
 - Projekt-eigene Skills liegen versioniert in `.claude/skills/` dieses Repos. Lokale Sessions laden sie selbst; **in einem Cloud-Thread fehlen sie** – dort bei Bedarf `.claude/skills/<name>/SKILL.md` lesen und befolgen.
-- In einem Cloud-Thread laufen Programme vom Rechner des Users nicht; Prüfungen, die sie brauchen (siehe Profil), als offen melden, nicht als bestanden.
+- In einem Cloud-Thread laufen Programme vom Rechner des Users nicht; Prüfungen, die sie brauchen (Spalte „Läuft in der Cloud“ in `docs/projekt.md`, Profil), als offen melden, nicht als bestanden.
 
 Das Profil gilt in jeder Session, nicht nur im Workflow: @.claude/workflow-profil.md
