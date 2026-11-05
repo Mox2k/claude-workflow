@@ -199,6 +199,8 @@ async function sha256(t){const b=await crypto.subtle.digest("SHA-256",new TextEn
 async function load(id){
   if(C[id])return C[id];
   const d=await fetch(`daten/${id}.json`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+  // fehlende Felder auffüllen, damit ein unvollständiges Projekt die Seite nicht anhält
+  d.vorhaben=d.vorhaben||[];d.abnahme=d.abnahme||[];d.meilensteine=d.meilensteine||[];d.bereiche=d.bereiche||{};d.themen=d.themen||[];d.abgeholt=d.abgeholt||{};d.ideen_abgeholt=d.ideen_abgeholt||[];
   let txt=null;try{const r=await fetch(`eingaben/${id}.json`);if(r.ok)txt=await r.text()}catch{}
   let e={};try{e=txt?JSON.parse(txt):{}}catch{}
   const c=C[id]={d,e,sha:txt?await sha256(txt):null};
@@ -336,7 +338,7 @@ function renderAlles(){
   const th=(c.d.themen||[]).length?`<section><div class="sh"><span class="dot d-idle"></span><h2>Offene Themen</h2><span class="c">${c.d.themen.length}</span></div><div class="list">${c.d.themen.map(t=>`<div class="empty" style="border-style:solid;color:var(--fg)">${esc(t)}</div>`).join("")}</div></section>`:"";
   $("main").innerHTML=th+Object.entries(g).map(([b,l])=>{const open=l.filter(x=>!archived(x)),arc=l.filter(archived);return `<section><div class="sh"><h2>${esc(b)}</h2><span class="c">${open.length}</span></div><div class="list">${open.map(x=>itemHtml(x,false)).join("")}${arc.length?`<details class="archive"${arc.some(x=>ui.open.has(x.nr))?" open":""}><summary>${arc.length} fertig</summary>${arc.map(arcRow).join("")}</details>`:""}</div></section>`}).join("");
 }
-function render(){if(!cur())return;renderTop();({jetzt:renderJetzt,abnahme:renderAbnahme,meilensteine:renderMs,alles:renderAlles})[ui.v]()}
+function render(){if(!cur())return;try{renderTop();({jetzt:renderJetzt,abnahme:renderAbnahme,meilensteine:renderMs,alles:renderAlles})[ui.v]()}catch(e){$("main").innerHTML='<div class="empty">Anzeige fehlgeschlagen: '+esc(e.message)+'</div>'}}
 
 // --- Reihenfolge ---
 function setOrder(kind,groupIds){const c=cur();const all=kind==="ab"?ordered("ab",AB(c)).map(a=>a.id):ordered("v",vorhaben()).map(x=>x.nr);
