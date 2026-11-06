@@ -37,8 +37,8 @@ Gemeldet wird, was Verhalten, Wartbarkeit oder die Abnahme trifft. Reine Kosmeti
 
 ## Grün: Minors
 
-Alle Minors an einen Fix-Subagent (Sonnet, `low`), nur diese beheben. Danach Verifikation, **kein** neuer Review – ein Review über Kosmetik-Fixes findet neue Kosmetik, die Schleife bricht nur, wenn sie nicht beginnt. Scheitert der Fix oder wird die Verifikation rot: Fix-Commit zurücknehmen (`git revert`), Minor bleibt offen. Ein Minor macht den Lauf nie rot.
+Alle Minors an einen Fix-Subagent (Sonnet, `low`), nur diese beheben. Danach Verifikation, **kein** neuer Review – ein Review über Kosmetik-Fixes findet neue Kosmetik, die Schleife bricht nur, wenn sie nicht beginnt. Scheitert der Fix oder wird die Verifikation rot: Fix-Commit zurücknehmen (`git revert`), Minor bleibt offen. Ein Minor macht den Lauf nie rot. Bleibt einer offen: als `finding` in die Zentrale (Skill `zentrale`, Tabelle „Wer/Wann/Was“).
 
 ## Folge-Spec
 
-Nur für einen strukturellen Befund, der eine Entwurfsentscheidung braucht und nicht zu diesem Auftrag gehört (eine tragende Abstraktion sitzt falsch, ein Muster zieht sich durch fremden Code). Nach `specs/followup/<YYYY-MM-DD>-<spec>-strukturell.md`, `status: complete`. Die Zahl der Minors ist kein Grund für eine Spec.
+Nur für einen strukturellen Befund, der eine Entwurfsentscheidung braucht und nicht zu diesem Auftrag gehört (eine tragende Abstraktion sitzt falsch, ein Muster zieht sich durch fremden Code). Nach `specs/followup/<YYYY-MM-DD>-<spec>-strukturell.md`, `status: complete`. Die Zahl der Minors ist kein Grund für eine Spec. Jede Folge-Spec kommt als Vorhaben `art: folge` in die Zentrale (Schritt 9, im selben Publish).

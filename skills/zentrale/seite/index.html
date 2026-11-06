@@ -6,7 +6,7 @@
 :root{
   --bg:#eef1f3; --panel:#ffffff; --sunk:#e3e8eb; --fg:#162027; --muted:#56656f; --line:#d3dbe0;
   --accent:#5b7fbf;
-  --you:#8a6fc4; --build:#4f8f63; --think:#b5844d; --run:#5b82c4; --idle:#8a959d;
+  --you:#8a6fc4; --find:#b0645c; --build:#4f8f63; --think:#b5844d; --run:#5b82c4; --idle:#8a959d;
   --soft:14%;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
@@ -14,11 +14,11 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#12181c; --panel:#1a2228; --sunk:#222c33; --fg:#dfe6ea; --muted:#95a3ac; --line:#2c3842;
-  --you:#a995d8; --build:#7db58d; --think:#d1a576; --run:#86a4d6; --idle:#86929a; --soft:22%; color-scheme:dark}}
+  --you:#a995d8; --find:#d68f86; --build:#7db58d; --think:#d1a576; --run:#86a4d6; --idle:#86929a; --soft:22%; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12181c; --panel:#1a2228; --sunk:#222c33; --fg:#dfe6ea; --muted:#95a3ac; --line:#2c3842;
-  --you:#a995d8; --build:#7db58d; --think:#d1a576; --run:#86a4d6; --idle:#86929a; --soft:22%; color-scheme:dark}
-:root{--accent-soft:color-mix(in srgb,var(--accent) var(--soft),var(--panel));--you-soft:color-mix(in srgb,var(--you) var(--soft),var(--panel));--build-soft:color-mix(in srgb,var(--build) var(--soft),var(--panel));--think-soft:color-mix(in srgb,var(--think) var(--soft),var(--panel));--run-soft:color-mix(in srgb,var(--run) var(--soft),var(--panel))}
+  --you:#a995d8; --find:#d68f86; --build:#7db58d; --think:#d1a576; --run:#86a4d6; --idle:#86929a; --soft:22%; color-scheme:dark}
+:root{--accent-soft:color-mix(in srgb,var(--accent) var(--soft),var(--panel));--you-soft:color-mix(in srgb,var(--you) var(--soft),var(--panel));--find-soft:color-mix(in srgb,var(--find) var(--soft),var(--panel));--build-soft:color-mix(in srgb,var(--build) var(--soft),var(--panel));--think-soft:color-mix(in srgb,var(--think) var(--soft),var(--panel));--run-soft:color-mix(in srgb,var(--run) var(--soft),var(--panel))}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
@@ -72,7 +72,7 @@ body.dragging{user-select:none;cursor:grabbing}
 .tt{font-weight:700}
 .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
 .tag{font:500 11px var(--mono);border-radius:4px;padding:1px 6px;background:var(--sunk);color:var(--muted);white-space:nowrap}
-.k-you{background:var(--you-soft);color:var(--you)}.k-build{background:var(--build-soft);color:var(--build)}.k-think{background:var(--think-soft);color:var(--think)}.k-run{background:var(--run-soft);color:var(--run)}
+.k-you{background:var(--you-soft);color:var(--you)}.k-build{background:var(--build-soft);color:var(--build)}.k-think{background:var(--think-soft);color:var(--think)}.k-run{background:var(--run-soft);color:var(--run)}.k-find{background:var(--find-soft);color:var(--find)}
 .mine{font-size:11.5px;color:var(--you);font-weight:700}
 .det{display:none;flex-direction:column;gap:8px;padding-top:4px}
 .item.open .det{display:flex}
@@ -131,8 +131,8 @@ textarea{min-height:64px;resize:vertical}
 .row:last-child{border:0}
 button.row{width:100%;background:none;border-width:0 0 1px;border-style:solid;border-color:var(--sunk);text-align:left;cursor:pointer;border-radius:4px}
 button.row:hover{background:var(--accent-soft)}
-button.row::after{content:"›";color:var(--muted);grid-column:4}
-.row{grid-template-columns:auto 1fr auto auto}
+button.row::after{content:"›";color:var(--muted);grid-column:5}
+.row{grid-template-columns:auto 1fr auto auto auto}
 @keyframes flash{0%,40%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 3px transparent}}
 .flash{animation:flash 1.6s ease-out}
 @media (prefers-reduced-motion:reduce){.flash{animation:none;outline:2px solid var(--accent)}}
@@ -188,8 +188,8 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const ls=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch{return null}};
 const ss=(k,v)=>{try{if(v===undefined)return JSON.parse(sessionStorage.getItem(k)||"null");if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,JSON.stringify(v))}catch{return null}};
 const mem=ls("pz-ui")||{};
-const ui={p:mem.p,v:mem.v||"jetzt",open:new Set(),abf:"offen",msOpen:new Set()};
-const saveUi=()=>ls("pz-ui",{p:ui.p,v:ui.v});
+const ui={p:mem.p,v:mem.v||"jetzt",af:mem.af||"alle",open:new Set(),abf:"offen",msOpen:new Set()};
+const saveUi=()=>ls("pz-ui",{p:ui.p,v:ui.v,af:ui.af});
 let PROJ=[];const C={};   // C[id]={d,e,sha}
 const KIND={"Idee":["think","Idee"],"Spec läuft":["run","Brainstorm"],"Spec fertig":["build","bereit"],"Gebaut":["idle","gebaut"]};
 const CH={up:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 8l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',dn:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',grip:'<svg viewBox="0 0 14 18" aria-hidden="true"><g fill="currentColor"><circle cx="4" cy="4" r="1.4"/><circle cx="10" cy="4" r="1.4"/><circle cx="4" cy="9" r="1.4"/><circle cx="10" cy="9" r="1.4"/><circle cx="4" cy="14" r="1.4"/><circle cx="10" cy="14" r="1.4"/></g></svg>'};
@@ -244,6 +244,11 @@ const pendingCount=()=>{const c=cur();return Object.keys(c.e.urteile).filter(id=
 function ideas(){const c=cur();return c.e.ideen.filter(i=>!(c.d.ideen_abgeholt||[]).includes(i.id))}
 function vorhaben(){const c=cur();const first=(c.d.meilensteine[0]||{}).id||"—";
   return c.d.vorhaben.concat(ideas().map(i=>({nr:i.id,m:first,t:i.text,s:"Idee",mine:true,info:"Von dir eingetragen. Claude gibt beim nächsten Abholen Nummer, Bereich und Meilenstein.",cmd:"/brainstorm "+i.text.slice(0,70)})))}
+// Findings (art finding/folge) filterbar: Alle / Ohne Findings / Nur Findings
+const isF=x=>x.art==="finding"||x.art==="folge";
+const VF=()=>vorhaben().filter(x=>ui.af==="nur"?isF(x):ui.af==="ohne"?!isF(x):true);
+function afBar(){const all=vorhaben();if(!all.some(isF))return "";const n=all.filter(x=>isF(x)&&!archived(x)).length;
+  return `<div class="abfilter">${[["alle","Alle"],["ohne","Ohne Findings"],["nur","Nur Findings "+n]].map(([k,t])=>`<button class="chip" type="button" data-af="${k}" aria-pressed="${ui.af===k}">${t}</button>`).join("")}</div>`}
 function ordered(kind,list){const o=cur().e.reihenfolge[kind]||[];const k=kind==="ab"?"id":"nr";
   return list.map((x,i)=>[x,o.indexOf(x[k]),i]).sort((a,b)=>(a[1]<0?1e6+a[2]:a[1])-(b[1]<0?1e6+b[2]:b[1])).map(z=>z[0])}
 const msIdx=m=>{const i=cur().d.meilensteine.findIndex(x=>x.id===m);return i<0?99:i};
@@ -270,8 +275,8 @@ function itemHtml(x,canMove){
     ${canMove?`<span class="grip" aria-label="Ziehen zum Sortieren">${CH.grip}</span>`:"<span></span>"}
     <div class="body" data-open="${esc(x.nr)}">
       <span class="tt">${esc(x.t)}</span>
-      <div class="meta">${x.aktiv?`<span class="tag k-run">${esc(x.aktiv.art)} läuft · seit ${esc(x.aktiv.seit)}</span>`:`<span class="tag k-${k[0]}">${k[1]}</span>`}${x.groesse?`<span class="tag">${esc(x.groesse)}</span>`:""}${x.mine?`<span class="mine">neu von dir</span>`:`<span>Nr. ${esc(x.nr)}${b?" · "+esc(b):""}</span>`}</div>
-      <div class="det">${x.info?`<p>${esc(x.info)}</p>`:""}${bl.length?"":cmdBox(x.cmd)}</div>
+      <div class="meta">${x.aktiv?`<span class="tag k-run">${esc(x.aktiv.art)} läuft · seit ${esc(x.aktiv.seit)}</span>`:`<span class="tag k-${k[0]}">${k[1]}</span>`}${x.art?`<span class="tag k-find">${x.art==="folge"?"Folge":"Finding"}</span>`:""}${x.groesse?`<span class="tag">${esc(x.groesse)}</span>`:""}${x.mine?`<span class="mine">neu von dir</span>`:`<span>Nr. ${esc(x.nr)}${b?" · "+esc(b):""}</span>`}</div>
+      <div class="det">${x.info?`<p>${esc(x.info)}</p>`:""}${x.quelle?`<span class="saved">Quelle: ${esc(x.quelle)}</span>`:""}${bl.length?"":cmdBox(x.cmd)}</div>
     </div>
     ${canMove?`<div class="move"><button type="button" data-mv="v|${esc(x.nr)}|-1" aria-label="Nach oben">${CH.up}</button><button type="button" data-mv="v|${esc(x.nr)}|1" aria-label="Nach unten">${CH.dn}</button></div>`:"<span></span>"}
     ${bl.length?`<span></span><div style="padding:0 8px 10px 6px">${waitLinks(bl,"v")}</div><span></span>`:""}
@@ -287,14 +292,14 @@ function block(name,title,dot,list,hint){
 }
 function banner(){const n=pendingCount();if(!n)return "";return `<div class="banner"><b>${n} ${n===1?"Eingabe wartet":"Eingaben warten"} auf Claude</b><span>Jede Session in diesem Projekt holt sie beim Start ab. Sofort geht es mit diesem Aufruf:</span>${cmdBox(ABHOLEN)}</div>`}
 function renderJetzt(){
-  const c=cur(),vs=vorhaben();
+  const c=cur(),vs=VF();
   const v=c.d.vorschlag,va=v&&AB(c).find(a=>a.id===v.ab);
   const next=va&&abState(va)==="offen"?`<div class="next"><span class="lbl">Als Nächstes</span><span class="t">${esc(va.t)}</span><span class="why">${esc(v.warum)}</span><button class="btn" type="button" data-goab="${esc(va.id)}">Zur Abnahme</button></div>`:"";
   const ab=ordered("ab",AB(c).filter(a=>abState(a)==="offen"));
   const you=`<section><div class="sh"><span class="dot d-you"></span><h2>Wartet auf dich</h2><span class="c">${ab.length}</span></div><div class="list">${ab.length?ab.map(a=>{const bl=blockersA(a);return `<div class="item${bl.length?" blocked":""}"><span></span><div class="body" data-goab="${esc(a.id)}"><span class="tt">${esc(a.t)}</span><div class="meta"><span class="tag k-you">${a.stufe==="nachpruefen"?"nachprüfen":"ansehen"}</span><span>${esc(a.gruppe)}</span></div>${waitLinks(bl,"ab")}</div><span></span></div>`}).join(""):`<div class="empty">Gerade nichts für dich.</div>`}</div></section>`;
   const done=c.d.vorhaben.filter(archived).filter(x=>x.fertig).sort((a,b)=>b.fertig.localeCompare(a.fertig)).slice(0,6);
   const recent=done.length?`<section><div class="sh"><span class="dot d-idle"></span><h2>Zuletzt fertig</h2></div><div class="recent">${done.map(x=>`<button type="button" data-jump="${esc(x.nr)}">${esc(x.kurz||x.t)}<small>${new Date(x.fertig).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}</small></button>`).join("")}</div></section>`:"";
-  $("main").innerHTML=banner()+next+`<div class="cols"><div class="stack">${you}${recent}</div>
+  $("main").innerHTML=banner()+next+afBar()+`<div class="cols"><div class="stack">${you}${recent}</div>
   <div class="stack">${block("bauen","Claude kann bauen","build",vs.filter(x=>x.s==="Spec fertig"),"ziehen oder Pfeile")}${block("denken","Zum Brainstormen","think",vs.filter(x=>x.s==="Idee"||x.s==="Spec läuft"),"ziehen oder Pfeile")}</div></div>`;
 }
 const AF=[["offen","Offen"],["talk","Besprechen"],["fix","Ändern"],["ok","Passt"],["claude","Bei Claude"]];
@@ -325,19 +330,19 @@ function renderAbnahme(){
   ${self.length?`<details class="self"><summary>Prüft Claude selbst (${self.length})</summary><ul>${self.map(a=>`<li>${esc(a.t)}: ${esc(a.selbst)}</li>`).join("")}</ul></details>`:""}`;
 }
 const arcRow=x=>`<div class="row" data-id="${esc(x.nr)}"><span class="nr">${esc(x.nr)}</span><span>${esc(x.t)}${x.fertig?` <small style="color:var(--muted)">${new Date(x.fertig).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}</small>`:""}</span><button class="btn" type="button" data-back="${esc(x.nr)}" style="padding:3px 9px;font-size:12.5px">Zurückholen</button></div>`;
-function rowHtml(x){const k=KIND[x.s]||["idle",""];const oa=openAbOf(x.nr).length;return `<button type="button" class="row" data-jump="${esc(x.nr)}"><span class="nr">${esc(x.mine?"neu":x.nr)}</span><span>${esc(x.t)}</span><span class="tag ${x.aktiv?"k-run":oa?"k-you":blockersV(x).length?"":"k-"+k[0]}">${x.aktiv?"läuft":oa?"Abnahme":blockersV(x).length?"wartet":k[1]}</span></button>`}
+function rowHtml(x){const k=KIND[x.s]||["idle",""];const oa=openAbOf(x.nr).length;return `<button type="button" class="row" data-jump="${esc(x.nr)}"><span class="nr">${esc(x.mine?"neu":x.nr)}</span><span>${esc(x.t)}</span>${x.art?`<span class="tag k-find">${x.art==="folge"?"Folge":"Finding"}</span>`:"<span></span>"}<span class="tag ${x.aktiv?"k-run":oa?"k-you":blockersV(x).length?"":"k-"+k[0]}">${x.aktiv?"läuft":oa?"Abnahme":blockersV(x).length?"wartet":k[1]}</span></button>`}
 function renderMs(){
-  const c=cur(),vs=vorhaben();
-  $("main").innerHTML=`<div class="legend"><span><i class="dot d-idle"></i>gebaut</span><span><i class="dot d-build"></i>bereit</span><span><i class="dot d-run"></i>Brainstorm</span><span><i class="dot d-think"></i>Idee</span></div><div class="list" style="gap:8px">${
+  const c=cur(),vs=VF();
+  $("main").innerHTML=afBar()+`<div class="legend"><span><i class="dot d-idle"></i>gebaut</span><span><i class="dot d-build"></i>bereit</span><span><i class="dot d-run"></i>Brainstorm</span><span><i class="dot d-think"></i>Idee</span></div><div class="list" style="gap:8px">${
   c.d.meilensteine.map(m=>{const g=vs.filter(x=>x.m===m.id);const cnt=s=>g.filter(x=>x.s===s).length;const n=g.length||1;
   return `<div class="ms${ui.msOpen.has(m.id)?" open":""}"><button type="button" data-ms="${esc(m.id)}"><span class="mt">${esc(m.id)} · ${esc(m.name)}</span><span class="mp">${cnt("Gebaut")} von ${g.length} gebaut</span>
     <span class="bar"><i style="width:${cnt("Gebaut")/n*100}%;background:var(--idle)"></i><i style="width:${cnt("Spec fertig")/n*100}%;background:var(--build)"></i><i style="width:${cnt("Spec läuft")/n*100}%;background:var(--run)"></i><i style="width:${cnt("Idee")/n*100}%;background:var(--think)"></i></span></button>
     <div class="rows">${ordered("v",g.filter(x=>!archived(x))).map(rowHtml).join("")}${g.filter(archived).length?`<details class="archive" style="margin-top:6px"><summary>${g.filter(archived).length} fertig</summary>${g.filter(archived).map(arcRow).join("")}</details>`:""}</div></div>`}).join("")}</div>`;
 }
 function renderAlles(){
-  const c=cur(),g={};vorhaben().forEach(x=>{const b=c.d.bereiche[x.b]||"ohne Bereich";(g[b]=g[b]||[]).push(x)});
+  const c=cur(),g={};VF().forEach(x=>{const b=c.d.bereiche[x.b]||"ohne Bereich";(g[b]=g[b]||[]).push(x)});
   const th=(c.d.themen||[]).length?`<section><div class="sh"><span class="dot d-idle"></span><h2>Offene Themen</h2><span class="c">${c.d.themen.length}</span></div><div class="list">${c.d.themen.map(t=>`<div class="empty" style="border-style:solid;color:var(--fg)">${esc(t)}</div>`).join("")}</div></section>`:"";
-  $("main").innerHTML=th+Object.entries(g).map(([b,l])=>{const open=l.filter(x=>!archived(x)),arc=l.filter(archived);return `<section><div class="sh"><h2>${esc(b)}</h2><span class="c">${open.length}</span></div><div class="list">${open.map(x=>itemHtml(x,false)).join("")}${arc.length?`<details class="archive"${arc.some(x=>ui.open.has(x.nr))?" open":""}><summary>${arc.length} fertig</summary>${arc.map(arcRow).join("")}</details>`:""}</div></section>`}).join("");
+  $("main").innerHTML=afBar()+th+Object.entries(g).map(([b,l])=>{const open=l.filter(x=>!archived(x)),arc=l.filter(archived);return `<section><div class="sh"><h2>${esc(b)}</h2><span class="c">${open.length}</span></div><div class="list">${open.map(x=>itemHtml(x,false)).join("")}${arc.length?`<details class="archive"${arc.some(x=>ui.open.has(x.nr))?" open":""}><summary>${arc.length} fertig</summary>${arc.map(arcRow).join("")}</details>`:""}</div></section>`}).join("");
 }
 function render(){if(!cur())return;try{renderTop();({jetzt:renderJetzt,abnahme:renderAbnahme,meilensteine:renderMs,alles:renderAlles})[ui.v]()}catch(e){$("main").innerHTML='<div class="empty">Anzeige fehlgeschlagen: '+esc(e.message)+'</div>'}}
 
@@ -368,7 +373,7 @@ function jumpTo(nr){const x=vorhaben().find(v=>v.nr===nr);if(!x)return;const oa=
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,1600)}
 async function selectProject(id){ui.p=id;ui.abf="offen";saveUi();if(!C[id]){$("main").innerHTML='<div class="loading">Lädt …</div>';try{await load(id)}catch{$("main").innerHTML='<div class="empty">Die Daten dieses Projekts sind gerade nicht erreichbar.</div>';return}}render()}
 document.addEventListener("click",e=>{
-  const t=e.target.closest("[data-back],[data-unback],[data-p],[data-v],[data-jump],[data-goab],[data-open],[data-copy],[data-mv],[data-vab],[data-abf],[data-ms]");if(!t||!cur())return;const d=t.dataset;
+  const t=e.target.closest("[data-back],[data-unback],[data-p],[data-v],[data-jump],[data-goab],[data-open],[data-copy],[data-mv],[data-vab],[data-abf],[data-af],[data-ms]");if(!t||!cur())return;const d=t.dataset;
   if(d.back){const c=cur();c.e.zurueck=c.e.zurueck||{};c.e.zurueck[d.back]=new Date().toISOString();queueSave(ui.p);goAb("z-"+d.back);toast("Zurückgeholt")}
   else if(d.unback){const c=cur();delete c.e.zurueck[d.unback];delete c.e.urteile["z-"+d.unback];queueSave(ui.p);render();toast("Wieder im Archiv")}
   else if(d.p)selectProject(d.p);
@@ -386,6 +391,7 @@ document.addEventListener("click",e=>{
       if(nx)ui.open.add(nx);render();toast("Abgenommen");if(nx)land(document.getElementById("ab-"+nx))}
     else{ui.open.add(id);render();toast(c.e.urteile[id]?"Gemerkt":"Wieder offen")}}
   else if(d.abf){ui.abf=d.abf;render()}
+  else if(d.af){ui.af=d.af;saveUi();render()}
   else if(d.ms){ui.msOpen.has(d.ms)?ui.msOpen.delete(d.ms):ui.msOpen.add(d.ms);render()}
   else if(d.open){ui.open.has(d.open)?ui.open.delete(d.open):ui.open.add(d.open);render()}
 });

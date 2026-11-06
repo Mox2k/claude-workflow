@@ -12,3 +12,4 @@ Steht in `.claude/workflow-profil.md` `Security: aus`, das mit dem Grund nennen 
 3. **Prüfen**: kritische Schwachstellen (Injection, XSS, Auth, Sessions, Secrets), Framework-spezifisches, allgemeine Praxis (Eingaben, IDs, Rechte). Im Prüfschritt alles notieren, gewichtet wird erst im Bericht.
 4. **Bericht** `docs/security-reports/<YYYY-MM-DD-HHmm>-security-report.md` (Zeit mit `date`): Kurzfassung, kritische Findings, weitere nach Schwere, priorisierte Maßnahmen. Je Finding Fundstelle, Auswirkung, Fix; leere Sektionen weglassen.
 5. Fragen, ob Fixes umgesetzt werden – einzeln, mit Test je Änderung, oder als Spec für `/implement`.
+6. Zentrale (Skill `zentrale`; nur mit Abschnitt „Zentrale“ im Profil): jedes Finding, das nicht in dieser Session behoben wird, als Vorhaben `art: finding` mit `quelle` = Report und passendem `cmd`; entsteht eine Spec, das Vorhaben auf `Spec fertig` mit `spec`.

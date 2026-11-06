@@ -26,4 +26,6 @@ Katalog fehlt → Bootstrap. Sonst nach Argument: `alle` / `F-NN,…` / Bereich 
 - Nach jedem `fixed` das Feature erneut testen. Ein `failed` oder ein `regressed` beendet den Lauf.
 - Report: bei `failed`/`regressed` immer (mit Verweis auf `/debugging B-NNN`), bei nur `open` fragen, sonst keiner. Inhalt nur Metadaten und Repro-Daten.
 
+- Zentrale am Ende (Skill `zentrale`, „Schreiben“; nur mit Abschnitt „Zentrale“ im Profil): jedes Finding, das nicht `fixed` ist, als Vorhaben `art: finding` mit `cmd` `/debugging B-NNN`; ein vorhandenes zum selben Befund aktualisieren. Ein früheres `finding`, das jetzt `fixed` ist, auf `Gebaut`.
+
 Bericht im Chat: getestet · gefunden · behoben · regressed · failed, bei Abbruch das auslösende Finding.

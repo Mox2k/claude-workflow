@@ -24,6 +24,7 @@ Kein `git push` – der lokale Merge ist reversibel, ein Push ist ein Effekt nac
 
 **Zentrale** über deren Schreibweg (Skill `zentrale`, „Schreiben“) – ohne Lock, sie hat eine eigene Konfliktprüfung. Maßgeblich sind ihre Pflegeregeln und die Tabelle „Wer/Wann/Was“, nicht der Stil des Bestands. Alles in einem Publish:
 - **Grün:** Vorhaben der Spec (gefunden über `spec`, den Pfad vor dem Verschieben) auf `Gebaut`, `fertig` = heute (Feature-Ordner: erst, wenn alle gewählten Sub-Specs integriert sind). Abnahme-Punkte anlegen (Abschnitt „Abnahme-Punkte anlegen“), `vorschlag` neu setzen. Kein Vorhaben zur Spec gefunden → neues anlegen (nächste Nummer, `spec`, Bereich und Meilenstein nur aus den vorhandenen, sonst weglassen und im Bericht sagen).
-- **Immer:** `aktiv` weg. Rot ändert sonst nichts.
+- **Rot:** im Vorhaben `info` um „Letzter Lauf rot: …“ ergänzen (offene Blocker/Major in Stichworten, Branch).
+- **Immer:** `aktiv` weg. Folge-Specs und offen gebliebene Minors dieses Laufs als Vorhaben `art: folge` bzw. `art: finding` (Tabelle „Wer/Wann/Was“).
 
 Fehlt der Abschnitt „Zentrale“ im Profil: nichts schreiben, im Bericht auf `/projekt-setup` verweisen.

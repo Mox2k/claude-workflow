@@ -28,7 +28,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
  "bereiche":{"B1":"Technik"},
  "meilensteine":[{"id":"M1","name":"Prototyp"}],
  "vorhaben":[{"nr":"37","b":"B5","m":"M1","t":"Titel","kurz":"Stichwort","s":"Idee","groesse":"klein",
-   "wartet":["36"],"aktiv":{"art":"Implementierung","seit":"21:15"},"info":"1–2 Sätze","cmd":"/brainstorm …","spec":"docs/specs/…","fertig":"2026-11-04"}],
+   "wartet":["36"],"art":"finding","quelle":"Browser-Test 2026-11-06, B-012","aktiv":{"art":"Implementierung","seit":"21:15"},"info":"1–2 Sätze","cmd":"/brainstorm …","spec":"docs/specs/…","fertig":"2026-11-04"}],
  "abnahme":[{"id":"xy-ab3","gruppe":"Sensor","t":"Titel","aus":"196","stufe":"ansehen",
    "schritte":[["tun","erwartet"]],"wartet":["xy-ab2"],"behoben":"…","selbst":"wie Claude es prüft","info":"1–2 Sätze"}],
  "themen":["offenes Thema als Satz"],
@@ -40,6 +40,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 - `cmd`: der fertige Aufruf zum Kopieren – `Idee`/`Spec läuft` → `/brainstorm …`, `Spec fertig` → `/implement <spec-pfad>`.
 - `wartet`: Nummern (Vorhaben) bzw. Abnahme-IDs, die vorher fertig sein müssen. Die Seite graut solche Punkte aus.
 - `groesse`: `klein` (eine Session) oder `groß`.
+- `art` (optional): `folge` = Folge-Spec aus einem Lauf, `finding` = offener Befund aus Review, Browser-Test oder Security-Check. Ohne `art` ist es ein normales Vorhaben. Die Seite filtert danach (Alle / Ohne Findings / Nur Findings). `quelle`: woher, kurz (Lauf, Report-Datei, `B-NNN`).
 - `aktiv`: nur während eine Session daran arbeitet (`Brainstorm` oder `Implementierung`, Uhrzeit); am Ende entfernen.
 - `stufe`: `ansehen` → nach „Ändern“ `beheben` (mit `behoben`: was gerade passiert) → `nachpruefen` (mit `behoben`: was geändert wurde). „Passt“ → Punkt entfernen.
 - `info` (Abnahme, optional): 1–2 Sätze Hintergrund, ggf. „Seite: /…“; aufgeklappt über den Schritten.
@@ -52,6 +53,7 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 2. **Bereiche und Meilensteine legt nur der User an.** Passt keiner, `b` bzw. `m` weglassen und im Bericht sagen.
 3. Überholtes ersetzen, nicht überlagern. Keine Lauf-Historie (die steht in `docs/implement-log.md`).
 4. Nur die Felder der eigenen Operation ändern.
+5. Findings nicht doppelt: gibt es zum selben Befund schon ein offenes Vorhaben (gleiche `quelle` bzw. gleicher Inhalt), dieses aktualisieren statt ein neues anzulegen.
 
 | Wer | Wann | Was |
 |---|---|---|
@@ -59,8 +61,13 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 | `/brainstorm` | Start | Vorhaben auf `Spec läuft` (oder neu), `aktiv` setzen |
 | `/brainstorm` | Ende | `Spec fertig`, `spec`, `cmd` = `/implement <pfad>`, `wartet`, `groesse`; `aktiv` weg. Abbruch: nur `aktiv` weg |
 | `/implement` | Start | `aktiv` setzen |
-| `/implement` | Ende grün, gemergt | `Gebaut`, `fertig`, `spec` = Archivpfad, `cmd` weg; Abnahme-Punkte anlegen; `aktiv` weg. Rot oder nur PR (Cloud): nur `aktiv` weg – `Gebaut` setzt erst der Lauf, der mergt |
-| Abholen (unten) | Sessionstart, Aufruf | Eingaben verarbeiten |
+| `/implement` | Folge-Spec geschrieben | neues Vorhaben `Spec fertig`, `art: folge`, `spec`, `cmd` = `/implement <pfad>`, `quelle` = Spec des Laufs, `info` = Befund in einem Satz |
+| `/implement` | Minor bleibt offen (Fix zurückgenommen) | neues Vorhaben `Idee`, `art: finding`, `quelle`, `info`, `cmd` |
+| `/implement` | Ende grün, gemergt | `Gebaut`, `fertig`, `spec` = Archivpfad, `cmd` weg; Abnahme-Punkte anlegen; `aktiv` weg. Rot: `aktiv` weg, `info` des Vorhabens um „Letzter Lauf rot: <offene Blocker/Major in Stichworten>, Branch `<branch>`“ ergänzen. Nur PR (Cloud): nur `aktiv` weg – `Gebaut` setzt erst der Lauf, der mergt |
+| `/browser-test` | Ende | je Finding, das offen, `failed` oder `regressed` bleibt: Vorhaben `Idee`, `art: finding`, `quelle` = Report und `B-NNN`, `cmd` = `/debugging B-NNN` |
+| `/security-check` | Ende | je Finding, das nicht im Lauf behoben wird: Vorhaben `Idee` (bzw. `Spec fertig`, wenn eine Spec dafür entsteht), `art: finding`, `quelle` = Report, `cmd` |
+| `/debugging` | Fix nachgewiesen | passendes `finding` auf `Gebaut`, `fertig` |
+| Abholen (unten) | Start jeder vom User gestarteten Session, `/prime`, Aufruf | Eingaben verarbeiten |
 | `/orchestrate` | – | liest, meldet Abweichungen, schreibt nichts |
 
 ## Lesen
@@ -73,13 +80,16 @@ Wo sie liegt, steht im Profil des Projekts (`.claude/workflow-profil.md`, Abschn
 2. Die lokale `daten/<id>.json` ändern (Datei bearbeiten, gültiges JSON, `stand` = jetzt).
 3. `read` mit nur der `url` (zählt als gesehen; nötig, sonst wird der Publish abgelehnt).
 4. `publish` mit `url`, `file_path` = lokale `index.html`, `files: {"daten/<id>.json": "<lokaler Pfad>"}`.
-5. Abgelehnt, weil inzwischen jemand gespeichert hat: ab Schritt 1 wiederholen und die eigene Änderung auf den neuen Stand setzen. Nie den alten Stand erneut senden.
+5. Abgelehnt, weil inzwischen jemand gespeichert hat: ab Schritt 1 wiederholen und die eigene Änderung auf den neuen Stand setzen. Nie den alten Stand erneut senden. Beim Abholen dabei überspringen, was eine andere Session inzwischen abgeholt hat (`abgeholt`, `ideen_abgeholt`).
 
 Mehrere Änderungen einer Session in einem Publish bündeln.
 
 ## Abholen
 
-Beim Start jeder Session im Projekt (über `/prime`) und auf den Aufruf „Hole die Urteile und Ideen aus der Projektzentrale ab …“:
+**Wann:** zu Beginn jeder Session, die der User selbst startet – die CLAUDE.md des Projekts verlangt es –, außerdem in `/prime` und auf den Aufruf „Hole die Urteile und Ideen aus der Projektzentrale ab …“. Nicht in Sessions mit `Auftraggeber:` im Startauftrag (vom Orchestrator gestartet): sonst holen mehrere parallele Sessions dasselbe ab.
+
+**Beim Sessionstart** knapp halten, die eigentliche Anfrage des Users hat Vorrang: lesen; Buchhaltung (Passt, Idee, Zurückgeholt) gleich still verarbeiten; Ändern und Besprechen nur in einer Zeile nennen und fragen, ob sie jetzt drankommen. Nichts offen → kein Wort dazu. Auf den ausdrücklichen Aufruf und in `/prime` alles wie unten.
+
 
 1. Lesen. Offen ist ein Urteil, wenn `abgeholt[<id>]` fehlt oder älter als `urteile[<id>].zeit` ist; eine Idee, wenn ihre `id` nicht in `ideen_abgeholt` steht; ein Zurückgeholtes (`zurueck[<nr>]`), wenn `abgeholt["z:<nr>"]` fehlt oder älter ist.
 2. Je Eintrag:
