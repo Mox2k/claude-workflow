@@ -26,7 +26,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px 10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
-.projects{display:flex;flex-wrap:wrap;gap:6px;padding:2px}
+.bar1{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.projects{min-width:0}
+.psel{position:relative;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--pc);background:color-mix(in srgb,var(--pc) var(--soft),var(--panel));border-radius:9px;padding:0 10px;max-width:100%}
+.psel i{width:10px;height:10px;border-radius:50%;background:var(--pc);flex:none}
+.psel::after{content:"";position:absolute;right:11px;top:50%;width:7px;height:7px;border:solid var(--muted);border-width:0 2px 2px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.psel select{appearance:none;-webkit-appearance:none;border:0;background:transparent;font:700 15px var(--display);color:var(--fg);padding:7px 22px 7px 0;width:auto;min-width:0;max-width:100%;cursor:pointer}
+.psel select option{font:15px var(--body);color:var(--fg);background:var(--panel)}
 .proj{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:7px 12px;font:700 15px var(--display)}
 .proj i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
 .proj[aria-pressed="true"]{background:color-mix(in srgb,var(--pc) var(--soft),var(--panel));border-color:var(--pc)}
@@ -167,8 +173,7 @@ button.row::after{content:"›";color:var(--muted);grid-column:5}
 <!-- Seite in einer Datei (fremde und nachgeladene Skripte lässt das Artifact nicht zu). Daten liegen in daten/ und eingaben/. -->
 <div class="shell">
   <div class="top">
-    <div class="projects" id="projects" role="group" aria-label="Projekt"></div>
-    <div class="sub"><span id="stamp"></span><span class="save" id="save"></span></div>
+    <div class="bar1"><div class="projects" id="projects"></div><div class="sub"><span id="stamp"></span><span class="save" id="save"></span></div></div>
     <div class="running" id="running" aria-label="Läuft gerade"></div>
     <div class="views" role="tablist" id="views"></div>
   </div>
@@ -259,7 +264,7 @@ function renderTop(){
   const p=P(),c=cur();
   document.documentElement.style.setProperty("--accent",p.farbe);
   $("stamp").textContent=(c.d.beispiel?"Beispieldaten · ":"")+"Stand "+new Date(c.d.stand).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
-  $("projects").innerHTML=PROJ.map(x=>{const n=waitsYou(x.id);return `<button class="proj" style="--pc:${esc(x.farbe)}" data-p="${x.id}" aria-pressed="${ui.p===x.id}"><i></i>${esc(x.name)}${n?`<span class="n" title="wartet auf dich">${n}</span>`:""}</button>`}).join("");
+  $("projects").innerHTML=`<label class="psel" style="--pc:${esc(p.farbe)}"><i></i><select id="psel" aria-label="Projekt">${PROJ.map(x=>{const n=waitsYou(x.id);return `<option value="${esc(x.id)}"${ui.p===x.id?" selected":""}>${esc(x.name)}${n?` · ${n} für dich`:""}</option>`}).join("")}</select></label>`;
   const run=c.d.vorhaben.filter(x=>x.aktiv);
   $("running").hidden=!run.length;
   $("running").innerHTML=run.map(x=>`<button class="run" type="button" data-jump="${esc(x.nr)}"><i></i>${esc(x.kurz||x.t)}<small>${esc(x.aktiv.art)} · ${esc(x.aktiv.seit)}</small></button>`).join("");
@@ -395,6 +400,7 @@ document.addEventListener("click",e=>{
   else if(d.ms){ui.msOpen.has(d.ms)?ui.msOpen.delete(d.ms):ui.msOpen.add(d.ms);render()}
   else if(d.open){ui.open.has(d.open)?ui.open.delete(d.open):ui.open.add(d.open);render()}
 });
+document.addEventListener("change",e=>{if(e.target.id==="psel")selectProject(e.target.value)});
 document.addEventListener("input",e=>{const id=e.target.dataset.note;const c=cur();if(!id||!c.e.urteile[id])return;c.e.urteile[id].note=e.target.value;c.e.urteile[id].zeit=new Date().toISOString();queueSave(ui.p)});
 $("fab").onclick=()=>{$("sheetH").textContent="Neue Idee für "+P().name;$("sheet").hidden=false;$("ideaText").focus()};
 $("ideaCancel").onclick=()=>{$("sheet").hidden=true};
